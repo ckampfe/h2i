@@ -23,3 +23,12 @@ FLAGS:
 ARGS:
     <number>    Either a hex number like 0x0A or a positive integer like 10
 ```
+
+## examples
+
+```
+clark$> hh 49
+0x31
+clark$> hh 0x31
+49
+```
