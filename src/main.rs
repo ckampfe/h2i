@@ -11,7 +11,7 @@ use structopt::StructOpt;
 struct Options {
     /// Either a hex number like 0x0A or a positive integer like 10
     #[structopt()]
-    number: String
+    number: String,
 }
 
 type ParseResult<T> = std::result::Result<(T, Output), nom::Err<(T, nom::error::ErrorKind)>>;
