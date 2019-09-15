@@ -4,7 +4,15 @@ use nom::bytes::complete::tag;
 use nom::character::complete::{digit1, hex_digit1};
 use nom::*;
 use std::collections::HashMap;
-use std::env;
+use structopt::StructOpt;
+
+#[derive(StructOpt, Debug)]
+#[structopt(name = "hh")]
+struct Options {
+    /// Either a hex number like 0x0A or a positive integer like 10
+    #[structopt()]
+    number: String
+}
 
 type ParseResult<T> = std::result::Result<(T, Output), nom::Err<(T, nom::error::ErrorKind)>>;
 
@@ -80,8 +88,8 @@ fn dec_to_hex(s: &[u8]) -> ParseResult<&[u8]> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let args: Vec<String> = env::args().collect();
-    let (_s, output) = parse(args[1].as_bytes()).unwrap();
+    let options = Options::from_args();
+    let (_s, output) = parse(options.number.as_bytes()).unwrap();
 
     match output {
         Output::ToInt(n) => println!("{}", n),
