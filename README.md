@@ -1,4 +1,4 @@
-# hh
+# hexi
 
 ## install
 
@@ -9,12 +9,12 @@ clark$> cargo install --path . --force
 ## use
 
 ```
-[~/code/hh](master)
-clark$> hh --help
-hh 0.1.0
+[~/code/hexi](master)
+clark$> hexi --help
+hexi 0.1.0
 
 USAGE:
-    hh <number>
+    hexi <number>
 
 FLAGS:
     -h, --help       Prints help information
@@ -27,8 +27,8 @@ ARGS:
 ## examples
 
 ```
-clark$> hh 49
+clark$> hexi 49
 0x31
-clark$> hh 0x31
+clark$> hexi 0x31
 49
 ```
