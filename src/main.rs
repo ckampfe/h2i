@@ -14,7 +14,7 @@ struct Options {
     number: String,
 }
 
-type ParseResult<T> = std::result::Result<(T, Output), nom::Err<(T, nom::error::ErrorKind)>>;
+type ParseResult<T, O> = std::result::Result<(T, O), nom::Err<(T, nom::error::ErrorKind)>>;
 
 enum Output {
     ToHex(usize),
@@ -44,13 +44,13 @@ lazy_static! {
     };
 }
 
-fn parse(s: &[u8]) -> ParseResult<&[u8]> {
+fn parse(s: &[u8]) -> ParseResult<&[u8], Output> {
     let (s, out) = alt((hex_to_dec, dec_to_hex))(s)?;
 
     Ok((s, out))
 }
 
-fn hex_to_dec(s: &[u8]) -> ParseResult<&[u8]> {
+fn hex_to_dec(s: &[u8]) -> ParseResult<&[u8], Output> {
     let (s, _) = tag("0x")(s)?;
     let (s, hex_digits) = hex_digit1(s)?;
 
@@ -73,7 +73,7 @@ fn hex_to_dec(s: &[u8]) -> ParseResult<&[u8]> {
     Ok((s.as_bytes(), Output::ToInt(number)))
 }
 
-fn dec_to_hex(s: &[u8]) -> ParseResult<&[u8]> {
+fn dec_to_hex(s: &[u8]) -> ParseResult<&[u8], Output> {
     let (s, digits) = digit1(s)?;
     Ok((
         s,
