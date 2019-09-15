@@ -22,7 +22,7 @@ enum Output {
 }
 
 lazy_static! {
-    static ref HASHMAP: HashMap<u8, usize> = {
+    static ref HEX_TO_DECIMAL: HashMap<u8, usize> = {
         let mut m = HashMap::new();
         m.insert(b"0"[0], 0);
         m.insert(b"1"[0], 1);
@@ -62,9 +62,9 @@ fn hex_to_dec(s: &[u8]) -> ParseResult<&[u8]> {
         .map(|(i, d)| {
             let sixteen_factor = i * 16;
             if i > 0 {
-                HASHMAP.get(&d).unwrap() * sixteen_factor
+                HEX_TO_DECIMAL.get(&d).unwrap() * sixteen_factor
             } else {
-                *HASHMAP.get(&d).unwrap()
+                *HEX_TO_DECIMAL.get(&d).unwrap()
             }
         });
 
