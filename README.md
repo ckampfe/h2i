@@ -1,5 +1,11 @@
 # hh
 
+## install
+
+```
+clark$> cargo install --path . --force
+```
+
 ## use
 
 ```
