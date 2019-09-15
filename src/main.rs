@@ -16,7 +16,6 @@ struct Options {
 
 type ParseResult<T> = std::result::Result<(T, Output), nom::Err<(T, nom::error::ErrorKind)>>;
 
-#[derive(Debug)]
 enum Output {
     ToHex(usize),
     ToInt(usize),
