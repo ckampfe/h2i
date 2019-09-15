@@ -60,8 +60,8 @@ fn hex_to_dec(s: &[u8]) -> ParseResult<&[u8], Output> {
         .rev()
         .enumerate()
         .map(|(i, d)| {
-            let sixteen_factor = i * 16;
             if i > 0 {
+                let sixteen_factor = i * 16;
                 HEX_TO_DECIMAL.get(&d).unwrap() * sixteen_factor
             } else {
                 *HEX_TO_DECIMAL.get(&d).unwrap()
