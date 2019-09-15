@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
-#[structopt(name = "hexi")]
+#[structopt(name = "h2i")]
 struct Options {
     /// Either a hex number like 0x0A or a positive integer like 10
     #[structopt()]
