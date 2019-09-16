@@ -1,9 +1,7 @@
-use lazy_static::*;
 use nom::branch::alt;
 use nom::bytes::complete::tag;
 use nom::character::complete::{digit1, hex_digit1};
 use nom::*;
-use std::collections::HashMap;
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
@@ -21,27 +19,25 @@ enum Output {
     ToInt(usize),
 }
 
-lazy_static! {
-    static ref HEX_TO_DECIMAL: HashMap<u8, usize> = {
-        let mut m = HashMap::new();
-        m.insert(b"0"[0], 0);
-        m.insert(b"1"[0], 1);
-        m.insert(b"2"[0], 2);
-        m.insert(b"3"[0], 3);
-        m.insert(b"4"[0], 4);
-        m.insert(b"5"[0], 5);
-        m.insert(b"6"[0], 6);
-        m.insert(b"7"[0], 7);
-        m.insert(b"8"[0], 8);
-        m.insert(b"9"[0], 9);
-        m.insert(b"A"[0], 10);
-        m.insert(b"B"[0], 11);
-        m.insert(b"C"[0], 12);
-        m.insert(b"D"[0], 13);
-        m.insert(b"E"[0], 14);
-        m.insert(b"F"[0], 15);
-        m
-    };
+fn hex_byte_to_dec(byte: u8) -> usize {
+    match &[byte] {
+        b"0" => 0,
+        b"1" => 1,
+        b"2" => 2,
+        b"3" => 3,
+        b"4" => 4,
+        b"5" => 5,
+        b"6" => 6,
+        b"7" => 7,
+        b"8" => 8,
+        b"9" => 9,
+        b"A" => 10,
+        b"B" => 11,
+        b"C" => 12,
+        b"D" => 13,
+        b"E" => 14,
+        &[_] => panic!("Byte must be a valid hex byte"),
+    }
 }
 
 fn parse(s: &[u8]) -> ParseResult<&[u8], Output> {
@@ -62,9 +58,9 @@ fn hex_to_dec(s: &[u8]) -> ParseResult<&[u8], Output> {
         .map(|(i, d)| {
             if i > 0 {
                 let sixteen_factor = i * 16;
-                HEX_TO_DECIMAL.get(&d).unwrap() * sixteen_factor
+                hex_byte_to_dec(*d) * sixteen_factor
             } else {
-                *HEX_TO_DECIMAL.get(&d).unwrap()
+                hex_byte_to_dec(*d)
             }
         });
 
