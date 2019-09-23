@@ -36,6 +36,7 @@ fn hex_byte_to_dec(byte: u8) -> usize {
         b"C" => 12,
         b"D" => 13,
         b"E" => 14,
+        b"F" => 15,
         &[_] => panic!("Byte must be a valid hex byte"),
     }
 }
